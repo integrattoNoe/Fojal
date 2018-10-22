@@ -1,4 +1,4 @@
-<?
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 if(!isset($this->session->userdata["logged_in"])){
@@ -14,17 +14,20 @@ if(!isset($this->session->userdata["logged_in"])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fojal Admin</title>
-    <script src="<?= base_url() ?>assets/jquery/dist/jquery.min.js"></script>
-    <script src="<?= base_url() ?>assets/bootstrap/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="<?= base_url() ?>assets/bootstrap/dist/css/bootstrap.css">
+    <script src="<?php echo base_url() ?>assets/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/bootstrap/dist/css/bootstrap.css">
     <script>
+        var url_imagenes = "<?php echo base_url() ?>uploads/img/";
+        var url_pdf = "<?php echo base_url() ?>uploads/pdf/";
+        console.log(url_imagenes);
         $(document).ready(function () {
 
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
-            $("#<?= $activa ?>").closest("ul").closest("li").addClass("active");
-            $("#<?= $activa ?>").addClass("active");
+            $("#<?php echo $activa ?>").closest("ul").closest("li").addClass("active");
+            $("#<?php echo $activa ?>").addClass("active");
         });
     </script>
 </head>
@@ -41,7 +44,7 @@ if(!isset($this->session->userdata["logged_in"])){
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Programas y trámites</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>
-                                <a href="<?= base_url()?>emprendimiento_social" id="empre_social">Emprendimiento social</a>
+                                <a href="<?php echo base_url()?>emprendimiento_social" id="empre_social">Emprendimiento social</a>
                             </li>
                             <li>
                                 <a href="#">Emprendimiento tradicional</a>

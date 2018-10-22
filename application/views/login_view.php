@@ -1,4 +1,4 @@
-<?
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 if(isset($this->session->userdata["logged_in"])){
@@ -15,9 +15,9 @@ if(isset($this->session->userdata["logged_in"])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Fojal</title>
-    <script src="<?= base_url().'application/assets/jquery/dist/jquery.min.js' ?>"></script>
-    <script src="<?= base_url().'application/assets/bootstrap/dist/bootstrao.min.js' ?>"></script>
-    <link rel="stylesheet" href="<?= base_url().'application/assets/bootstrap/dist/boostrap.css' ?>">
+    <script src="<?php echo base_url().'application/assets/jquery/dist/jquery.min.js' ?>"></script>
+    <script src="<?php echo base_url().'application/assets/bootstrap/dist/bootstrao.min.js' ?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url().'application/assets/bootstrap/dist/boostrap.css' ?>">
 
     <script>
         $(document).ready(function(){
@@ -54,15 +54,15 @@ if(isset($this->session->userdata["logged_in"])){
 </head>
 <body>
     
-    <!--<form id="formLogin" action="//<? //base_url()?>login/log_in" method="post">-->
-    <? echo form_open("login"); ?>
-    <?
+    <!--<form id="formLogin" action="//<?php //base_url()?>login/log_in" method="post">-->
+    <?php echo form_open("login"); ?>
+    <?php
      if(isset($msgError)){
     ?>
         <div class="alert alert-danger" role="alert">
-            <?= $msgError;?>
+            <?php echo $msgError;?>
         </div>  
-    <?     
+    <?php     
      }else{
          echo 'mal';
      }
