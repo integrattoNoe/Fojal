@@ -1,12 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class EmprendimientoSocial extends CI_Controller {
+class emprendimientoSocial extends CI_Controller {
     private $i;
     private $dataMaestros;
     private $flag;
     private $algoSeActualizo;
-    private $modelo;
 
     function __construct(){
         parent::__construct();
@@ -16,7 +15,6 @@ class EmprendimientoSocial extends CI_Controller {
         $this->dataMaestros = array();
         $this->flag = TRUE;
         $this->algoSeActualizo = false;
-        $this->modelo = 1;
     }
     function index(){
     	$data["activa"] = "empre_social";
@@ -105,15 +103,12 @@ class EmprendimientoSocial extends CI_Controller {
         for($i = 0; $i < 20; $i++){
             if($this->input->post("accion") == "actualizar"){
                 $arr = array(
-                    "idTema" => ($i+1),
-                    "nombre" => $this->input->post('tema'.($i+1)),
-                    "modelo" => $this->modelo
+                    "id" => ($i+1),
+                    "nombre" => $this->input->post('tema'.($i+1))
                 );
             }else{
                 $arr = array(
-                    "nombre" => $this->input->post('tema'.($i+1)),
-                    "modelo" => $this->modelo,
-                    "idTema" => ($i+1)
+                    "nombre" => $this->input->post('tema'.($i+1))
                 );
             }
             
@@ -179,19 +174,16 @@ class EmprendimientoSocial extends CI_Controller {
                     $arr1["filename"]=$filename;
                     if($this->input->post("accion") == "actualizar"){
                         $arr = array(
+                            "id" => ($this->i+1),
                             "nombre"=>$this->input->post('nombre_maestro'.($this->i+1)),
                             "licenciatura"=>$this->input->post('licenciatura_maestro'.($this->i+1)),
-                            "imagen"=>$uuid.$uploadData["file_ext"],
-                            "modelo" => $this->modelo,
-                            "idMaestro" => ($this->i+1)
+                            "imagen"=>$uuid.$uploadData["file_ext"]
                         );
                     }else{
                         $arr = array(
                             "nombre"=>$this->input->post('nombre_maestro'.($this->i+1)),
                             "licenciatura"=>$this->input->post('licenciatura_maestro'.($this->i+1)),
-                            "imagen"=>$uuid.$uploadData["file_ext"],
-                            "modelo" => $this->modelo,
-                            "idMaestro" => ($this->i+1)
+                            "imagen"=>$uuid.$uploadData["file_ext"]
                         );
                     }
                     
@@ -209,10 +201,9 @@ class EmprendimientoSocial extends CI_Controller {
                 //$this->guardarMaestros($response);
             }else if($this->input->post("accion") == "actualizar"){
                 $arr = array(
+                    "id" => ($this->i+1),
                     "nombre"=>$this->input->post('nombre_maestro'.($this->i+1)),
-                    "licenciatura"=>$this->input->post('licenciatura_maestro'.($this->i+1)),
-                    "modelo" => $this->modelo,
-                    "idMaestro" => ($this->i+1)
+                    "licenciatura"=>$this->input->post('licenciatura_maestro'.($this->i+1))
                 );
                 array_push($this->dataMaestros, $arr);
             }
@@ -254,16 +245,14 @@ class EmprendimientoSocial extends CI_Controller {
                         "pdf"=>$filename,
                         "correo"=>$this->input->post('correo'),
                         "fecha_inicio_curso"=>$this->input->post('fechaInicio'),
-                        "fecha_entrega"=>$this->input->post('fechaEntrega'),
-                        "modelo" => $this->modelo
+                        "fecha_entrega"=>$this->input->post('fechaEntrega')
                     );
                 }else{
                     $data = array(
                         "pdf"=>$filename,
                         "correo"=>$this->input->post('correo'),
                         "fecha_inicio_curso"=>$this->input->post('fechaInicio'),
-                        "fecha_entrega"=>$this->input->post('fechaEntrega'),
-                        "modelo" => $this->modelo
+                        "fecha_entrega"=>$this->input->post('fechaEntrega')
                     );
                 }
                 if($this->input->post("accion") == "guardar"){
@@ -287,8 +276,7 @@ class EmprendimientoSocial extends CI_Controller {
             $data = array(
                 "correo"=>$this->input->post('correo'),
                 "fecha_inicio_curso"=>$this->input->post('fechaInicio'),
-                "fecha_entrega"=>$this->input->post('fechaEntrega'),
-                "modelo" => $this->modelo
+                "fecha_entrega"=>$this->input->post('fechaEntrega')
             );
             $resp = $this->emprendimiento_social_model->actualizarPdfymas($data);
             if($resp || $this->input->post("accion") == "actualizar"){

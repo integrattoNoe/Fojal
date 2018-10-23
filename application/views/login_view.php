@@ -2,10 +2,10 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 if(isset($this->session->userdata["logged_in"])){
-    //echo "SI HAY SESSIN";
+    echo "SI HAY SESSIN";
     header("location: ".base_url()."login");
 }else{
-    //echo "NO HAY SESSION";
+    echo "NO HAY SESSION";
 }
 ?>
 <!DOCTYPE html>
@@ -15,9 +15,9 @@ if(isset($this->session->userdata["logged_in"])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Fojal</title>
-    <script src="<?php echo base_url().'assets/jquery/dist/jquery.min.js' ?>"></script>
-    <script src="<?php echo base_url().'assets/bootstrap/dist/js/bootstrap.min.js' ?>"></script>
-    <link rel="stylesheet" href="<?php echo base_url().'assets/bootstrap/dist/css/bootstrap.css' ?>">
+    <script src="<?php echo base_url().'application/assets/jquery/dist/jquery.min.js' ?>"></script>
+    <script src="<?php echo base_url().'application/assets/bootstrap/dist/bootstrao.min.js' ?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url().'application/assets/bootstrap/dist/boostrap.css' ?>">
 
     <script>
         $(document).ready(function(){
@@ -50,10 +50,11 @@ if(isset($this->session->userdata["logged_in"])){
                 });
             });
         });
-    </script>
+    </script>-->
 </head>
 <body>
-
+    
+    <!--<form id="formLogin" action="//<?php //base_url()?>login/log_in" method="post">-->
     <?php echo form_open("login"); ?>
     <?php
      if(isset($msgError)){
@@ -62,6 +63,8 @@ if(isset($this->session->userdata["logged_in"])){
             <?php echo $msgError;?>
         </div>  
     <?php     
+     }else{
+         echo 'mal';
      }
      echo validation_errors();
     ?>
@@ -73,7 +76,7 @@ if(isset($this->session->userdata["logged_in"])){
             <label for="exampleInputPassword1">Password</label>
             <input name ="pass" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary">Ingresar</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     <!--</form>-->
     <?php echo form_close(); ?>
 </body>

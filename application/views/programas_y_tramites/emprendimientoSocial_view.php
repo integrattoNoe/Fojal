@@ -124,18 +124,12 @@
 				$(this).css("border","1px solid gray");	
 			});
 			$.ajax({
-				//prod:
-				url:"<?php echo base_url()?>index.php/programas_y_tramites/EmprendimientoSocial/validarForm",
-				/*//dev
-				url:"<?php //echo base_url()?>programas_y_tramites/emprendimientoSocial/validarForm",*/
+				url:"<?php echo base_url()?>programas_y_tramites/emprendimientoSocial/validarForm",
 				type:"post",
 				data:formD,
 				cache: false,
 				contentType: false,
 				processData: false,
-				beforeSend:function(){
-					$("#loader").show();
-				},
 				success:function(data){
 					$(this).css("border","1px solid gray;");
 					console.log(data);
@@ -154,13 +148,8 @@
 								alert("Los datos se han actualizado");
 							}
 
-						}else{
-							alert(data.msg);
 						}
 					}
-				},
-				complete:function(){
-					$("#loader").fadeOut();
 				},
 				error:function(){
 
@@ -171,14 +160,8 @@
 		var yaHayDatos = false;
 		function getDatos(){
 			$.ajax({
-				//prod:
-				url:"<?php echo base_url()?>index.php/programas_y_tramites/EmprendimientoSocial/cargarDatos",
-				/*//dev
-				url:"<?php //echo base_url()?>programas_y_tramites/emprendimientoSocial/cargarDatos",*/
+				url:"<?php echo base_url()?>programas_y_tramites/emprendimientoSocial/cargarDatos",
 				type:"post",
-				beforeSend:function(){
-					$("#loader").show();
-				},
 				success:function(data){
 					console.log(data);
 					yaHayDatos = (data.cursos.length > 0 && data.maestros.length > 0 && data.empre.length > 0);
@@ -206,9 +189,6 @@
 						$("input[name=fechaEntrega]").val(data.empre[0].fechaEntrega);
 					}
 
-				},
-				complete:function(){
-					$("#loader").fadeOut();
 				},
 				error:function(){
 

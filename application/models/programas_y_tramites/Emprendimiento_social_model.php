@@ -1,31 +1,27 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Emprendimiento_social_model extends CI_Model
 {
-    private $modelo;
 	function __construct()
     {
         parent::__construct();
         $this->load->database();//con esto hacemos que pueda cargar nuestra base de datos con el modelo
-        $this->modelo = 1;//1 para social
     }
     function getDatos(){
         $cursos = array();
         $maestros = array();
         $empre = array();
-        $this->db->where("modelo",$this->modelo);
         $query = $this->db->get("cursos");
         if($query->num_rows() > 0){
             foreach ($query->result() as $row) {
-                $arr = array("id"=>$row->idTema,"curso"=>$row->nombre);
+                $arr = array("id"=>$row->id,"curso"=>$row->nombre);
                 array_push($cursos, $arr);
             }
         }
-        $this->db->where("modelo",$this->modelo);
         $query = $this->db->get("maestros");
         if($query->num_rows() > 0){
             foreach ($query->result() as $row) {
                 $arr = array(
-                    "id"=>$row->idMaestro,
+                    "id"=>$row->id,
                     "nombre"=>$row->nombre,
                     "licenciatura"=>$row->licenciatura,
                     "imagen"=>$row->imagen
@@ -33,8 +29,7 @@ class Emprendimiento_social_model extends CI_Model
                 array_push($maestros, $arr);
             }
         }
-        $this->db->where("modelo",$this->modelo);
-        $query = $this->db->get("datos_modelos");
+        $query = $this->db->get("empre_social");
         if($query->num_rows() > 0){
             foreach ($query->result() as $row) {
                 $arr = array(
@@ -61,22 +56,20 @@ class Emprendimiento_social_model extends CI_Model
     	return $query;
     }
     function guardarPdfymas($data){
-    	$query = $this->db->insert("datos_modelos",$data);
+    	$query = $this->db->insert("empre_social",$data);
     	return $query;
     }
     function actualizarCursos($data){
-        $this->db->where("modelo",$this->modelo);
-        $query = $this->db->update_batch("cursos",$data,"idTema");
+        $query = $this->db->update_batch("cursos",$data,"id");
         return $query;
     }
     function actualizarMaestros($data){
-        $this->db->where("modelo",$this->modelo);
-        $query = $this->db->update_batch("maestros",$data,"idMaestro");
+        $query = $this->db->update_batch("maestros",$data,"id");
         return $query;
     }
     function actualizarPdfymas($data){
-        $this->db->where("modelo",$this->modelo);
-        $query = $this->db->update("datos_modelos",$data);
+        $this->db->where("id",1);
+        $query = $this->db->update("empre_social",$data);
         return $query;
     }
 }
