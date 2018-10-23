@@ -4,7 +4,7 @@
 <script src="<?php echo base_url() ?>assets/jquery/dist/datepicker-es.js"></script>
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/jquery-ui.css">
 <h1>Programas y trámites</h1>
-<h4>Modelo de emprendimiento social</h4>
+<h4>Modelo de emprendimiento tradicional</h4>
 <br>
 <br>
 <br>
@@ -127,7 +127,7 @@
 				//prod:
 				url:"<?php echo base_url()?>index.php/programas_y_tramites/EmprendimientoSocial/validarForm",
 				/*//dev
-				url:"<?php //echo base_url()?>programas_y_tramites/emprendimientoSocial/validarForm",*/
+				url:"<?php //echo base_url()?>programas_y_tramites/emprendimientoTradicional/validarForm",*/
 				type:"post",
 				data:formD,
 				cache: false,
@@ -172,9 +172,9 @@
 		function getDatos(){
 			$.ajax({
 				//prod:
-				url:"<?php echo base_url()?>index.php/programas_y_tramites/EmprendimientoSocial/cargarDatos",
+				url:"<?php echo base_url()?>index.php/programas_y_tramites/EmprendimientoTradicional/cargarDatos",
 				/*//dev
-				url:"<?php //echo base_url()?>programas_y_tramites/emprendimientoSocial/cargarDatos",*/
+				url:"<?php //echo base_url()?>programas_y_tramites/emprendimientoTradicional/cargarDatos",*/
 				type:"post",
 				beforeSend:function(){
 					$("#loader").show();

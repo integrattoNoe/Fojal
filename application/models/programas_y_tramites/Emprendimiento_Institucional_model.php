@@ -1,12 +1,12 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Emprendimiento_social_model extends CI_Model
+class Emprendimiento_Institucional_model extends CI_Model
 {
     private $modelo;
-	function __construct()
+    function __construct()
     {
         parent::__construct();
         $this->load->database();//con esto hacemos que pueda cargar nuestra base de datos con el modelo
-        $this->modelo = 1;//1 para social
+        $this->modelo = 3;//3 para institucinoal
     }
     function getDatos(){
         $cursos = array();
@@ -53,16 +53,16 @@ class Emprendimiento_social_model extends CI_Model
         return $data;
     }
     function guardarCursos($data){
-    	$query = $this->db->insert_batch("cursos",$data);
-    	return $query;
+        $query = $this->db->insert_batch("cursos",$data);
+        return $query;
     }
     function guardarMaestros($data){
-    	$query = $this->db->insert_batch("maestros",$data);
-    	return $query;
+        $query = $this->db->insert_batch("maestros",$data);
+        return $query;
     }
     function guardarPdfymas($data){
-    	$query = $this->db->insert("datos_modelos",$data);
-    	return $query;
+        $query = $this->db->insert("datos_modelos",$data);
+        return $query;
     }
     function actualizarCursos($data){
         $this->db->where("modelo",$this->modelo);

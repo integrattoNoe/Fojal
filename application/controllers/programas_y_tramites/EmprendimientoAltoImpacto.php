@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class EmprendimientoSocial extends CI_Controller {
+class EmprendimientoAltoImpacto extends CI_Controller {
     private $i;
     private $dataMaestros;
     private $flag;
@@ -11,26 +11,26 @@ class EmprendimientoSocial extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->library('upload');
-        $this->load->model("programas_y_tramites/emprendimiento_social_model");
+        $this->load->model("programas_y_tramites/emprendimiento_altoImpacto_model");
         $this->i = 0;
         $this->dataMaestros = array();
         $this->flag = TRUE;
         $this->algoSeActualizo = false;
-        $this->modelo = 1;
+        $this->modelo = 4;
     }
+
     function index(){
-    	$data["activa"] = "empre_social";
-        //$datos["data"] = $this->emprendimiento_social_model->getDatos();
+    	$data["activa"] = "empre_alto";
         $this->load->view("header_view",$data);
-        $this->load->view("programas_y_tramites/emprendimientoSocial_view");
-        $this->load->view("footer_view");
-        //$this->cargarDatos();
-        
+        $this->load->view("programas_y_tramites/EmprendimientoAltoImpacto_view");
+        $this->load->view("footer_view"); 
     }
+
     function cargarDatos(){
-        $datos = $this->emprendimiento_social_model->getDatos();
+        $datos = $this->emprendimiento_altoImpacto_model->getDatos();
         $this->responder($datos);
     }
+
     function validarForm(){
         $faltantes = array();
         for($i = 0; $i<20; $i++){
@@ -95,9 +95,7 @@ class EmprendimientoSocial extends CI_Controller {
                 $this->actualizarCursos();
             }*/
             
-        }
-            
-        
+        }    
     }
 
     function guardarCursos(){
@@ -121,9 +119,9 @@ class EmprendimientoSocial extends CI_Controller {
         }
         if(count($data) > 0){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->emprendimiento_social_model->guardarCursos($data);
+                $resp = $this->emprendimiento_altoImpacto_model->guardarCursos($data);
             }else if($this->input->post("accion") == "actualizar"){
-                $resp = $this->emprendimiento_social_model->actualizarCursos($data);
+                $resp = $this->emprendimiento_altoImpacto_model->actualizarCursos($data);
             }
             $response["query"] = $resp;
             if($resp || $this->input->post("accion") == "actualizar"){
@@ -140,16 +138,11 @@ class EmprendimientoSocial extends CI_Controller {
 
     
     function guardarMaestros($response){
-        /*$data = array();
-        $flag = TRUE;*/
         $arRes = array();
         
         for($this->i = 0; $this->i<3; $this->i++){
-        //if($this->i<3){
             if($this->input->post("accion") == "guardar" || !empty($_FILES['imgMaestro'.($this->i+1)]['name'])){
                 $uuid = md5(uniqid(rand(), true));
-                //if(!empty($_FILES['files']['name'][$i])){
-                  // Define new $_FILES array - $_FILES['file']
                 $_FILES['file']['name'] = $_FILES['imgMaestro'.($this->i+1)]['name'];
                 $_FILES['file']['type'] = $_FILES['imgMaestro'.($this->i+1)]['type'];
                 $_FILES['file']['tmp_name'] = $_FILES['imgMaestro'.($this->i+1)]['tmp_name'];
@@ -204,9 +197,6 @@ class EmprendimientoSocial extends CI_Controller {
                 }
                 //}
                 array_push($arRes, $arr1);
-
-                //$this->i++;
-                //$this->guardarMaestros($response);
             }else if($this->input->post("accion") == "actualizar"){
                 $arr = array(
                     "nombre"=>$this->input->post('nombre_maestro'.($this->i+1)),
@@ -220,10 +210,10 @@ class EmprendimientoSocial extends CI_Controller {
         }
         if($this->flag){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->emprendimiento_social_model->guardarMaestros($this->dataMaestros);
+                $resp = $this->emprendimiento_altoImpacto_model->guardarMaestros($this->dataMaestros);
             }else if($this->input->post("accion") == "actualizar"){
                 if(count($this->dataMaestros) > 0){
-                    $resp = $this->emprendimiento_social_model->actualizarMaestros($this->dataMaestros);
+                    $resp = $this->emprendimiento_altoImpacto_model->actualizarMaestros($this->dataMaestros);
                 }
             }
             
@@ -235,9 +225,9 @@ class EmprendimientoSocial extends CI_Controller {
         }else{
             $response["expl"] = $arRes;
             $this->responder($response);
-        }
-        
+        }  
     }
+
     function guardarPdfCorreoYfechas(){
         $config['upload_path'] = 'uploads/pdf/'; 
         $config['allowed_types'] = 'pdf';
@@ -267,9 +257,9 @@ class EmprendimientoSocial extends CI_Controller {
                     );
                 }
                 if($this->input->post("accion") == "guardar"){
-                    $resp = $this->emprendimiento_social_model->guardarPdfymas($data);
+                    $resp = $this->emprendimiento_altoImpacto_model->guardarPdfymas($data);
                 }else{
-                    $resp = $this->emprendimiento_social_model->actualizarPdfymas($data);
+                    $resp = $this->emprendimiento_altoImpacto_model->actualizarPdfymas($data);
                 }
                 
                 if($resp){
@@ -290,7 +280,7 @@ class EmprendimientoSocial extends CI_Controller {
                 "fecha_entrega"=>$this->input->post('fechaEntrega'),
                 "modelo" => $this->modelo
             );
-            $resp = $this->emprendimiento_social_model->actualizarPdfymas($data);
+            $resp = $this->emprendimiento_altoImpacto_model->actualizarPdfymas($data);
             if($resp || $this->input->post("accion") == "actualizar"){
                 $response["code"]=200;
                 $this->algoSeActualizo = $resp;
