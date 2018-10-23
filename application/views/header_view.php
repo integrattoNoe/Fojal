@@ -47,13 +47,13 @@ if(!isset($this->session->userdata["logged_in"])){
                                 <a href="<?php echo base_url()?>emprendimiento_social" id="empre_social">Emprendimiento social</a>
                             </li>
                             <li>
-                                <a href="#">Emprendimiento tradicional</a>
+                                <a href="<?php echo base_url()?>emprendimiento_tradicional" id="empre_tradicional">Emprendimiento tradicional</a>
                             </li>
                             <li>
-                                <a href="#">Emprendimiento institucional</a>
+                                <a href="<?php echo base_url()?>emprendimiento_institucional" id="empre_institucional">Emprendimiento institucional</a>
                             </li>
                             <li>
-                                <a href="#">Emprendimiento de alto impacto</a>
+                                <a href="<?php echo base_url()?>emprendimiento_alto_impacto" id="empre_alto">Emprendimiento de alto impacto</a>
                             </li>
                         </ul>
                     </li>
