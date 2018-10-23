@@ -3,64 +3,35 @@
 <script src="<?php echo base_url() ?>assets/jquery/dist/jquery-ui.js"></script>
 <script src="<?php echo base_url() ?>assets/jquery/dist/datepicker-es.js"></script>
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/jquery-ui.css">
-<h1>Programas y trámites</h1>
-<h4>Modelo de emprendimiento institucional</h4>
+<h1>Platicas informativas</h1>
 <br>
 <br>
 <br>
-<h5>Programa del curso de la academia</h5>
 <?php echo validation_errors();
 ?>
 <form action="javascript:;" method="post" id="formD">
-	<div id="temas">
-		<?php
-		for($i = 0; $i<20; $i++){
-		?>
-			<input type="text" name="tema<?php echo($i+1)?>" placeholder="Tema <?php echo($i+1)?> (max 40 caracteres)" maxlength="40" class="tema">
-		<?php		
-		}
-		?>
+	<div id="ayudaFojal" class="divColumn">
+		<h6>Conoce cómo podemos ayudarte en Fojal</h6>
+		<textarea name="ayuda" id="ayudaArea" cols="30" rows="10" maxlength="700" placeholder="Max 700 carácteres"></textarea>
 	</div>
-	<div id="infoMaestros">
-		<?php
-		for($i = 0; $i<3; $i++){
-		?>
-			<div id="maestro<?php echo($i+1)?>">
-				<h6>Información del maestro <?php echo($i+1)?> - Curso de la academia</h6>
-				<img src="" alt="">
-				<button class="cambiarImg">Cambiar imágen</button>
-				<input type="file" class="fileMaestro" name="imgMaestro<?php echo($i+1)?>" accept="image/jpeg,image/gif,image/png">
-				<label>
-					Nombre del maestro
-					<input type="text" name="nombre_maestro<?php echo($i+1)?>" placeholder="Max 30 caracteres">
-				</label>
-				<label>
-					Nombre de la licenciatura
-					<input type="text" name="licenciatura_maestro<?php echo($i+1)?>" placeholder="Max 40 caracteres">
-				</label>
-			</div>
-		<?php		
-		}
-		?>
+	<div id="infoGeneral" class="divColumn">
+		<h6>Información general</h6>
+		<textarea name="infoGeneral" id="infoGeneralArea" cols="30" rows="10" maxlength="200" placeholder="Max 200 carácteres"></textarea>
 	</div>
-	<div id="pdf" class="divColumn">
-		<h6>PDF descargable para Modelo de Emprendimiento Social</h6>
-		<span id="existePDF"></span>
-		<button id="cambiarPDF">Cambiar PDF</button>
-		<span id="nuevoPDF"></span>
-		<input type="file" name="pdf" accept="application/pdf">
+	<div id="confirma" class="divColumn">
+		<h6>Confirma tu asistencia</h6>
+		<textarea name="asistencia" id="asistenciaArea" cols="30" rows="10" maxlength="200" placeholder="Max 200 carácteres"></textarea>
 	</div>
-	<div id="correo" class="divColumn">
-		<h6>Correo electrónico que se muestra en la sección de trámite, para que los usuarios envíen sus documentos</h6>
-		<input type="text" name="correo" placeholder="Max 40 caracteres">
+	<div id="horario" class="divColumn">
+		<h6>Horario de platicas informativas</h6>
+		<textarea name="horario" id="horarioArea" cols="30" rows="10" maxlength="100" placeholder="Max 100 carácteres"></textarea>
 	</div>
-	<div id="fechaInicio" class="divColumn">
-		<h6>Fecha de inicio del próximo curso de la academia</h6>
-		<input type="text" name="fechaInicio" class="dateP">
-	</div>
-	<div id="fechaEntrega" class="divColumn">
-		<h6>Próxima fecha de entrega de dictámenes de financiamiento</h6>
-		<input type="text" name="fechaEntrega" class="dateP">
+	<div id="fotoGeneral" class="divColumn">
+		<h6>Foto de lado de información general - Adjuntar imagen</h6>
+		<img src="" alt="">
+		<button class="cambiarImg">Cambiar imágen</button>
+		<input type="file" class="fileMaestro" name="fotoGeneral" accept="image/jpeg,image/gif,image/png">
+		<label>
 	</div>
 	<div id="botones">
 		<button id="regreasr">Regresar</button>
@@ -69,26 +40,26 @@
 </form>
 
 <style>
-	.tema,#infoMaestros div label,.fileMaestro, .divColumn input{
+	.tema,#fotoGeneral div label,.fileMaestro, .divColumn input, .divColumn textarea{
 		display: block;
 	    width: 50%;
 	    margin: 10px 0px;
 	    font-size: 14px;
 	}
-	#infoMaestros div, .divColumn{
+	#fotoGeneral div, .divColumn{
 		display: flex;
     	justify-content: center;
     	flex-flow: column;
     	margin:20px 0px;
     	align-items: flex-start;
 	}
-	#infoMaestros div label{
+	#fotoGeneral div label{
 		display: flex;
 	    flex-flow: column;
 	    justify-content: center;
 	    width: 50%;
 	}
-	#infoMaestros div img{
+	#fotoGeneral img{
 		width: 200px;
 		height: 150px;
 		border:1px solid #000;
@@ -105,8 +76,8 @@
 	$(document).ready(function(){
 		$(".cambiarImg,#cambiarPDF,#nuevoPDF").hide();
 		getDatos();
-		$(".dateP").datepicker();
-		$(".dateP").datepicker("option", "dateFormat","yy-mm-dd");
+		/*$(".dateP").datepicker();
+		$(".dateP").datepicker("option", "dateFormat","yy-mm-dd");*/
 		$("#regresar").on("click",function(e){
 			e.preventDefault();
 		});
@@ -123,11 +94,14 @@
 			$("input").each(function(){
 				$(this).css("border","1px solid gray");	
 			});
+			$("textarea").each(function(){
+				$(this).css("border","1px solid gray");	
+			});
 			$.ajax({
 				//prod:
-				url:"<?php echo base_url()?>index.php/programas_y_tramites/EmprendimientoInstitucional/validarForm",
+				url:"<?php echo base_url()?>index.php/platicas_informativas/PlaticasInformativas/validarForm",
 				/*//dev
-				url:"<?php //echo base_url()?>programas_y_tramites/emprendimientoInstitucional/validarForm",*/
+				url:"<?php //echo base_url()?>programas_y_tramites/EmprendimientoAltoImpacto/validarForm",*/
 				type:"post",
 				data:formD,
 				cache: false,
@@ -143,7 +117,7 @@
 						alert("Revise que todos los campos estén llenos");
 						if(data.faltantes.length >0){
 							for(var i = 0; i<data.faltantes.length; i++){
-								$("input[name="+data.faltantes[i]+"]").css("border","2px solid red");
+								$("textarea[name="+data.faltantes[i]+"], input[name="+data.faltantes[i]+"]").css("border","2px solid red");
 							}
 						}
 					}else{
@@ -173,39 +147,24 @@
 		function getDatos(){
 			$.ajax({
 				//prod:
-				url:"<?php echo base_url()?>index.php/programas_y_tramites/EmprendimientoInstitucional/cargarDatos",
+				url:"<?php echo base_url()?>index.php/platicas_informativas/PlaticasInformativas/cargarDatos",
 				/*//dev
-				url:"<?php //echo base_url()?>programas_y_tramites/emprendimientoInstitucional/cargarDatos",*/
+				url:"<?php //echo base_url()?>programas_y_tramites/EmprendimientoAltoImpacto/cargarDatos",*/
 				type:"post",
 				beforeSend:function(){
 					$("#loader").show();
 				},
 				success:function(data){
 					console.log(data);
-					yaHayDatos = (data.cursos.length > 0 && data.maestros.length > 0 && data.empre.length > 0);
+					yaHayDatos = (data.platicas.length > 0 );
 					console.log(yaHayDatos);
-					if(data.cursos.length>0){
-						for(var i = 0; i<20; i++){
-							$("input[name=tema"+(data.cursos[i].id)+"]").val(data.cursos[i].curso);
-						}
-					}
-					if(data.maestros.length > 0){
-						for(var i = 0; i<3; i++){
-							$("input[name=nombre_maestro"+(data.maestros[i].id)+"]").val(data.maestros[i].nombre);
-							$("input[name=licenciatura_maestro"+(data.maestros[i].id)+"]").val(data.maestros[i].licenciatura);
-							$("#maestro"+data.maestros[i].id+" img").attr("src",url_imagenes+data.maestros[i].imagen);
-							$("#maestro"+data.maestros[i].id+" .fileMaestro").hide();
-							$("#maestro"+data.maestros[i].id+" .cambiarImg").show();
-						}
-					}
-					if(data.empre.length > 0){
-						$("#existePDF").text(data.empre[0].pdf);
-						$("#cambiarPDF").show();
-						$("input[name=pdf]").hide();
-						$("input[name=correo]").val(data.empre[0].correo);
-						$("input[name=fechaInicio]").val(data.empre[0].fechaInicio);
-						$("input[name=fechaEntrega]").val(data.empre[0].fechaEntrega);
-					}
+					$("#ayudaArea").text(data.platicas[0].ayuda);
+					$("#infoGeneralArea").text(data.platicas[0].infoGeneral);
+					$("#asistenciaArea").text(data.platicas[0].asistencia);
+					$("#horarioArea").text(data.platicas[0].horario);
+					$("#fotoGeneral img").attr("src",url_imagenes+data.platicas[0].foto);
+					$(".fileMaestro").hide();
+					$(".cambiarImg").show();
 
 				},
 				complete:function(){

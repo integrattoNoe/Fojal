@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class EmprendimientoTradicional extends CI_Controller {
+class PlaticasInformativas extends CI_Controller {
     private $i;
     private $dataMaestros;
     private $flag;
@@ -11,91 +11,63 @@ class EmprendimientoTradicional extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->library('upload');
-        $this->load->model("programas_y_tramites/Emprendimiento_Tradicional_model");
-        $this->i = 0;
-        $this->dataMaestros = array();
-        $this->flag = TRUE;
-        $this->algoSeActualizo = false;
-        $this->modelo = 2;
+        $this->load->model("platicas_informativas/PlaticasInformativas_model");
     }
-
     function index(){
-    	$data["activa"] = "empre_tradicional";
+    	$data["activa"] = "platicas";
+        //$datos["data"] = $this->PlaticasInformativas_model->getDatos();
         $this->load->view("header_view",$data);
-        $this->load->view("programas_y_tramites/EmprendimientoTradicional_view");
-        $this->load->view("footer_view"); 
+        $this->load->view("platicas_informativas/PlaticasInformativas_view");
+        $this->load->view("footer_view");
+        //$this->cargarDatos();
+        
     }
-
     function cargarDatos(){
-        $datos = $this->Emprendimiento_Tradicional_model->getDatos();
+        $datos = $this->PlaticasInformativas_model->getDatos();
         $this->responder($datos);
     }
 
     function validarForm(){
         $faltantes = array();
-        for($i = 0; $i<20; $i++){
-            $this->form_validation->set_rules('tema'.($i+1), 'Tema '.($i+1), 'required');
-            $this->form_validation->set_message('required', 'tema'.($i+1));
-        }
         if($this->input->post("accion") == "guardar"){
-            for($i = 0; $i < 3; $i++){
-                if (empty($_FILES['imgMaestro'.($i+1)]['name'])){
-                    $this->form_validation->set_rules('imgMaestro'.($i+1), 'Imagen del maestro '.($i+1), 'required');
-                } 
-                $this->form_validation->set_rules('nombre_maestro'.($i+1), 'Nombre del maestro '.($i+1), 'required');
-                $this->form_validation->set_rules('licenciatura_maestro'.($i+1), 'Licenciatura del maestro '.($i+1), 'required');
-            }
-            if (empty($_FILES['pdf']['name']) || $_FILES['pdf']['type'] != "application/pdf"){
-                $this->form_validation->set_rules('pdf', 'PDF', 'required');
+            if (empty($_FILES['fotoGeneral']['name'])){
+                $this->form_validation->set_rules('fotoGeneral', 'General', 'required');
             }
         }
-        
-        
-        $this->form_validation->set_rules('correo', 'Correo', 'required');
-        $this->form_validation->set_rules('fechaInicio', 'Fecha', 'required');
-        $this->form_validation->set_rules('fechaEntrega', 'Fecha', 'required');
+        $this->form_validation->set_rules('horario', 'Horario', 'required');
+        $this->form_validation->set_rules('asistencia', 'Asistencia', 'required');
+        $this->form_validation->set_rules('infoGeneral', 'General', 'required');
+        $this->form_validation->set_rules('ayuda', 'Ayuda', 'required');
 
         if ($this->form_validation->run() === FALSE) {
-            for($i = 0; $i<20; $i++){
-                if(form_error('tema'.($i+1))){
-                    array_push($faltantes, 'tema'.($i+1));
-                }
-            }
+            
             if($this->input->post("accion") == "guardar"){
-                for($i = 0; $i < 3; $i++){
-                    if(form_error('imgMaestro'.($i+1))){
-                        array_push($faltantes, 'imgMaestro'.($i+1));
-                    }
-                    if(form_error('nombre_maestro'.($i+1))){
-                        array_push($faltantes, 'nombre_maestro'.($i+1));
-                    }
-                    if(form_error('licenciatura_maestro'.($i+1))){
-                        array_push($faltantes, 'licenciatura_maestro'.($i+1));
-                    }
-                }
-                if(form_error("pdf"))
-                    array_push($faltantes, 'pdf');
+                if(form_error("fotoGeneral"))
+                    array_push($faltantes, 'fotoGeneral');
             }
-            if(form_error("correo"))
-                array_push($faltantes, 'correo');
-            if(form_error("fechaInicio"))
-                array_push($faltantes, 'fechaInicio');
-            if(form_error("fechaEntrega"))
-                array_push($faltantes, 'fechaEntrega');
+            if(form_error("horario"))
+                array_push($faltantes, 'horario');
+            if(form_error("confirma"))
+                array_push($faltantes, 'confirma');
+            if(form_error("infoGeneral"))
+                array_push($faltantes, 'infoGeneral');
+            if(form_error("ayudaFojal"))
+                array_push($faltantes, 'ayuda');
             $response["code"]=400;
             $response["msg"] = "Revisar todos los campos";
             $response["faltantes"] = $faltantes;
-            $response["pdf"] = $_FILES['pdf']['type'];
             $this->responder($response);
         }else{
-            $this->guardarCursos();
+            $this->guardar();
             /*if($this->input->post("accion") == "guardar"){
                 $this->guardarCursos();
             }else if($this->input->post("accion") == "actualizar"){
                 $this->actualizarCursos();
             }*/
             
-        }    
+        }
+            
+        
     }
 
     function guardarCursos(){
@@ -119,9 +91,9 @@ class EmprendimientoTradicional extends CI_Controller {
         }
         if(count($data) > 0){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->Emprendimiento_Tradicional_model->guardarCursos($data);
+                $resp = $this->PlaticasInformativas_model->guardarCursos($data);
             }else if($this->input->post("accion") == "actualizar"){
-                $resp = $this->Emprendimiento_Tradicional_model->actualizarCursos($data);
+                $resp = $this->PlaticasInformativas_model->actualizarCursos($data);
             }
             $response["query"] = $resp;
             if($resp || $this->input->post("accion") == "actualizar"){
@@ -138,11 +110,16 @@ class EmprendimientoTradicional extends CI_Controller {
 
     
     function guardarMaestros($response){
+        /*$data = array();
+        $flag = TRUE;*/
         $arRes = array();
         
         for($this->i = 0; $this->i<3; $this->i++){
+        //if($this->i<3){
             if($this->input->post("accion") == "guardar" || !empty($_FILES['imgMaestro'.($this->i+1)]['name'])){
                 $uuid = md5(uniqid(rand(), true));
+                //if(!empty($_FILES['files']['name'][$i])){
+                  // Define new $_FILES array - $_FILES['file']
                 $_FILES['file']['name'] = $_FILES['imgMaestro'.($this->i+1)]['name'];
                 $_FILES['file']['type'] = $_FILES['imgMaestro'.($this->i+1)]['type'];
                 $_FILES['file']['tmp_name'] = $_FILES['imgMaestro'.($this->i+1)]['tmp_name'];
@@ -197,6 +174,9 @@ class EmprendimientoTradicional extends CI_Controller {
                 }
                 //}
                 array_push($arRes, $arr1);
+
+                //$this->i++;
+                //$this->guardarMaestros($response);
             }else if($this->input->post("accion") == "actualizar"){
                 $arr = array(
                     "nombre"=>$this->input->post('nombre_maestro'.($this->i+1)),
@@ -210,10 +190,10 @@ class EmprendimientoTradicional extends CI_Controller {
         }
         if($this->flag){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->Emprendimiento_Tradicional_model->guardarMaestros($this->dataMaestros);
+                $resp = $this->PlaticasInformativas_model->guardarMaestros($this->dataMaestros);
             }else if($this->input->post("accion") == "actualizar"){
                 if(count($this->dataMaestros) > 0){
-                    $resp = $this->Emprendimiento_Tradicional_model->actualizarMaestros($this->dataMaestros);
+                    $resp = $this->PlaticasInformativas_model->actualizarMaestros($this->dataMaestros);
                 }
             }
             
@@ -225,41 +205,33 @@ class EmprendimientoTradicional extends CI_Controller {
         }else{
             $response["expl"] = $arRes;
             $this->responder($response);
-        }  
+        }
+        
     }
-
-    function guardarPdfCorreoYfechas(){
-        $config['upload_path'] = 'uploads/pdf/'; 
-        $config['allowed_types'] = 'pdf';
+    function guardar(){
+        $config['upload_path'] = 'uploads/img/'; 
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
         $config['max_size'] = '5000';
+        $uuid = md5(uniqid(rand(), true));
+        $config['file_name'] = $uuid;
         $this->upload->initialize($config);
         $response["pdfYmas"] = "vamos a guardar pdf y mas";
-        if($this->input->post("accion") == "guardar" || !empty($_FILES['pdf']['name'])){
+        if($this->input->post("accion") == "guardar" || !empty($_FILES['fotoGeneral']['name'])){
             // File upload
-            if($this->upload->do_upload('pdf')){
+            if($this->upload->do_upload('fotoGeneral')){
                 $uploadData = $this->upload->data();
                 $filename = $uploadData['file_name'];
-                if($this->input->post("accion") == "actualizar"){
-                    $data = array(
-                        "pdf"=>$filename,
-                        "correo"=>$this->input->post('correo'),
-                        "fecha_inicio_curso"=>$this->input->post('fechaInicio'),
-                        "fecha_entrega"=>$this->input->post('fechaEntrega'),
-                        "modelo" => $this->modelo
-                    );
-                }else{
-                    $data = array(
-                        "pdf"=>$filename,
-                        "correo"=>$this->input->post('correo'),
-                        "fecha_inicio_curso"=>$this->input->post('fechaInicio'),
-                        "fecha_entrega"=>$this->input->post('fechaEntrega'),
-                        "modelo" => $this->modelo
-                    );
-                }
+                $data = array(
+                    "ayuda"=>$this->input->post('ayuda'),
+                    "informacion"=>$this->input->post('infoGeneral'),
+                    "asistencia"=>$this->input->post('asistencia'),
+                    "horario"=>$this->input->post('horario'),
+                    "foto"=>$uuid.$uploadData["file_ext"]
+                );
                 if($this->input->post("accion") == "guardar"){
-                    $resp = $this->Emprendimiento_Tradicional_model->guardarPdfymas($data);
+                    $resp = $this->PlaticasInformativas_model->guardar($data);
                 }else{
-                    $resp = $this->Emprendimiento_Tradicional_model->actualizarPdfymas($data);
+                    $resp = $this->PlaticasInformativas_model->actualizar($data);
                 }
                 
                 if($resp){
@@ -275,12 +247,12 @@ class EmprendimientoTradicional extends CI_Controller {
             }
         }else{
             $data = array(
-                "correo"=>$this->input->post('correo'),
-                "fecha_inicio_curso"=>$this->input->post('fechaInicio'),
-                "fecha_entrega"=>$this->input->post('fechaEntrega'),
-                "modelo" => $this->modelo
+                "ayuda"=>$this->input->post('ayuda'),
+                "informacion"=>$this->input->post('infoGeneral'),
+                "asistencia"=>$this->input->post('asistencia'),
+                "horario"=>$this->input->post('horario')
             );
-            $resp = $this->Emprendimiento_Tradicional_model->actualizarPdfymas($data);
+            $resp = $this->PlaticasInformativas_model->actualizar($data);
             if($resp || $this->input->post("accion") == "actualizar"){
                 $response["code"]=200;
                 $this->algoSeActualizo = $resp;

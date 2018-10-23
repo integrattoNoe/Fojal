@@ -11,7 +11,7 @@ class EmprendimientoAltoImpacto extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->library('upload');
-        $this->load->model("programas_y_tramites/emprendimiento_altoImpacto_model");
+        $this->load->model("programas_y_tramites/Emprendimiento_AltoImpacto_model");
         $this->i = 0;
         $this->dataMaestros = array();
         $this->flag = TRUE;
@@ -27,7 +27,7 @@ class EmprendimientoAltoImpacto extends CI_Controller {
     }
 
     function cargarDatos(){
-        $datos = $this->emprendimiento_altoImpacto_model->getDatos();
+        $datos = $this->Emprendimiento_AltoImpacto_model->getDatos();
         $this->responder($datos);
     }
 
@@ -119,9 +119,9 @@ class EmprendimientoAltoImpacto extends CI_Controller {
         }
         if(count($data) > 0){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->emprendimiento_altoImpacto_model->guardarCursos($data);
+                $resp = $this->Emprendimiento_AltoImpacto_model->guardarCursos($data);
             }else if($this->input->post("accion") == "actualizar"){
-                $resp = $this->emprendimiento_altoImpacto_model->actualizarCursos($data);
+                $resp = $this->Emprendimiento_AltoImpacto_model->actualizarCursos($data);
             }
             $response["query"] = $resp;
             if($resp || $this->input->post("accion") == "actualizar"){
@@ -170,7 +170,7 @@ class EmprendimientoAltoImpacto extends CI_Controller {
                     // Initialize array
                     $response['cagada'][] = $uploadData;
                     $arr1["filename"]=$filename;
-                    if($this->input->post("accion") == "actualizar"){
+                    /*if($this->input->post("accion") == "actualizar"){
                         $arr = array(
                             "nombre"=>$this->input->post('nombre_maestro'.($this->i+1)),
                             "licenciatura"=>$this->input->post('licenciatura_maestro'.($this->i+1)),
@@ -178,7 +178,7 @@ class EmprendimientoAltoImpacto extends CI_Controller {
                             "modelo" => $this->modelo,
                             "idMaestro" => ($this->i+1)
                         );
-                    }else{
+                    }else{*/
                         $arr = array(
                             "nombre"=>$this->input->post('nombre_maestro'.($this->i+1)),
                             "licenciatura"=>$this->input->post('licenciatura_maestro'.($this->i+1)),
@@ -186,7 +186,7 @@ class EmprendimientoAltoImpacto extends CI_Controller {
                             "modelo" => $this->modelo,
                             "idMaestro" => ($this->i+1)
                         );
-                    }
+                    //}
                     
                     $response["uuid"][$this->i]=$filename;
                     array_push($this->dataMaestros, $arr);
@@ -210,10 +210,10 @@ class EmprendimientoAltoImpacto extends CI_Controller {
         }
         if($this->flag){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->emprendimiento_altoImpacto_model->guardarMaestros($this->dataMaestros);
+                $resp = $this->Emprendimiento_AltoImpacto_model->guardarMaestros($this->dataMaestros);
             }else if($this->input->post("accion") == "actualizar"){
                 if(count($this->dataMaestros) > 0){
-                    $resp = $this->emprendimiento_altoImpacto_model->actualizarMaestros($this->dataMaestros);
+                    $resp = $this->Emprendimiento_AltoImpacto_model->actualizarMaestros($this->dataMaestros);
                 }
             }
             
@@ -257,9 +257,9 @@ class EmprendimientoAltoImpacto extends CI_Controller {
                     );
                 }
                 if($this->input->post("accion") == "guardar"){
-                    $resp = $this->emprendimiento_altoImpacto_model->guardarPdfymas($data);
+                    $resp = $this->Emprendimiento_AltoImpacto_model->guardarPdfymas($data);
                 }else{
-                    $resp = $this->emprendimiento_altoImpacto_model->actualizarPdfymas($data);
+                    $resp = $this->Emprendimiento_AltoImpacto_model->actualizarPdfymas($data);
                 }
                 
                 if($resp){
@@ -280,7 +280,7 @@ class EmprendimientoAltoImpacto extends CI_Controller {
                 "fecha_entrega"=>$this->input->post('fechaEntrega'),
                 "modelo" => $this->modelo
             );
-            $resp = $this->emprendimiento_altoImpacto_model->actualizarPdfymas($data);
+            $resp = $this->Emprendimiento_AltoImpacto_model->actualizarPdfymas($data);
             if($resp || $this->input->post("accion") == "actualizar"){
                 $response["code"]=200;
                 $this->algoSeActualizo = $resp;

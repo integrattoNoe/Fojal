@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Emprendimiento_social_model extends CI_Model
+class Emprendimiento_Social_model extends CI_Model
 {
     private $modelo;
 	function __construct()

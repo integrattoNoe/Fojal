@@ -11,7 +11,7 @@ class EmprendimientoInstitucional extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->library('upload');
-        $this->load->model("programas_y_tramites/emprendimiento_institucional_model");
+        $this->load->model("programas_y_tramites/Emprendimiento_Institucional_model");
         $this->i = 0;
         $this->dataMaestros = array();
         $this->flag = TRUE;
@@ -22,12 +22,12 @@ class EmprendimientoInstitucional extends CI_Controller {
     function index(){
     	$data["activa"] = "empre_institucional";
         $this->load->view("header_view",$data);
-        $this->load->view("programas_y_tramites/emprendimientoInstitucional_view");
+        $this->load->view("programas_y_tramites/EmprendimientoInstitucional_view");
         $this->load->view("footer_view"); 
     }
 
     function cargarDatos(){
-        $datos = $this->emprendimiento_institucional_model->getDatos();
+        $datos = $this->Emprendimiento_Institucional_model->getDatos();
         $this->responder($datos);
     }
 
@@ -119,9 +119,9 @@ class EmprendimientoInstitucional extends CI_Controller {
         }
         if(count($data) > 0){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->emprendimiento_institucional_model->guardarCursos($data);
+                $resp = $this->Emprendimiento_Institucional_model->guardarCursos($data);
             }else if($this->input->post("accion") == "actualizar"){
-                $resp = $this->emprendimiento_institucional_model->actualizarCursos($data);
+                $resp = $this->Emprendimiento_Institucional_model->actualizarCursos($data);
             }
             $response["query"] = $resp;
             if($resp || $this->input->post("accion") == "actualizar"){
@@ -210,10 +210,10 @@ class EmprendimientoInstitucional extends CI_Controller {
         }
         if($this->flag){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->emprendimiento_institucional_model->guardarMaestros($this->dataMaestros);
+                $resp = $this->Emprendimiento_Institucional_model->guardarMaestros($this->dataMaestros);
             }else if($this->input->post("accion") == "actualizar"){
                 if(count($this->dataMaestros) > 0){
-                    $resp = $this->emprendimiento_institucional_model->actualizarMaestros($this->dataMaestros);
+                    $resp = $this->Emprendimiento_Institucional_model->actualizarMaestros($this->dataMaestros);
                 }
             }
             
@@ -257,9 +257,9 @@ class EmprendimientoInstitucional extends CI_Controller {
                     );
                 }
                 if($this->input->post("accion") == "guardar"){
-                    $resp = $this->emprendimiento_institucional_model->guardarPdfymas($data);
+                    $resp = $this->Emprendimiento_Institucional_model->guardarPdfymas($data);
                 }else{
-                    $resp = $this->emprendimiento_institucional_model->actualizarPdfymas($data);
+                    $resp = $this->Emprendimiento_Institucional_model->actualizarPdfymas($data);
                 }
                 
                 if($resp){
@@ -280,7 +280,7 @@ class EmprendimientoInstitucional extends CI_Controller {
                 "fecha_entrega"=>$this->input->post('fechaEntrega'),
                 "modelo" => $this->modelo
             );
-            $resp = $this->emprendimiento_institucional_model->actualizarPdfymas($data);
+            $resp = $this->Emprendimiento_Institucional_model->actualizarPdfymas($data);
             if($resp || $this->input->post("accion") == "actualizar"){
                 $response["code"]=200;
                 $this->algoSeActualizo = $resp;

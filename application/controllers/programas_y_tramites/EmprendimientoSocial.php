@@ -11,7 +11,7 @@ class EmprendimientoSocial extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->library('upload');
-        $this->load->model("programas_y_tramites/emprendimiento_social_model");
+        $this->load->model("programas_y_tramites/Emprendimiento_Social_model");
         $this->i = 0;
         $this->dataMaestros = array();
         $this->flag = TRUE;
@@ -20,15 +20,15 @@ class EmprendimientoSocial extends CI_Controller {
     }
     function index(){
     	$data["activa"] = "empre_social";
-        //$datos["data"] = $this->emprendimiento_social_model->getDatos();
+        //$datos["data"] = $this->Emprendimiento_Social_model->getDatos();
         $this->load->view("header_view",$data);
-        $this->load->view("programas_y_tramites/emprendimientoSocial_view");
+        $this->load->view("programas_y_tramites/EmprendimientoSocial_view");
         $this->load->view("footer_view");
         //$this->cargarDatos();
         
     }
     function cargarDatos(){
-        $datos = $this->emprendimiento_social_model->getDatos();
+        $datos = $this->Emprendimiento_Social_model->getDatos();
         $this->responder($datos);
     }
     function validarForm(){
@@ -121,9 +121,9 @@ class EmprendimientoSocial extends CI_Controller {
         }
         if(count($data) > 0){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->emprendimiento_social_model->guardarCursos($data);
+                $resp = $this->Emprendimiento_Social_model->guardarCursos($data);
             }else if($this->input->post("accion") == "actualizar"){
-                $resp = $this->emprendimiento_social_model->actualizarCursos($data);
+                $resp = $this->Emprendimiento_Social_model->actualizarCursos($data);
             }
             $response["query"] = $resp;
             if($resp || $this->input->post("accion") == "actualizar"){
@@ -220,10 +220,10 @@ class EmprendimientoSocial extends CI_Controller {
         }
         if($this->flag){
             if($this->input->post("accion") == "guardar"){
-                $resp = $this->emprendimiento_social_model->guardarMaestros($this->dataMaestros);
+                $resp = $this->Emprendimiento_Social_model->guardarMaestros($this->dataMaestros);
             }else if($this->input->post("accion") == "actualizar"){
                 if(count($this->dataMaestros) > 0){
-                    $resp = $this->emprendimiento_social_model->actualizarMaestros($this->dataMaestros);
+                    $resp = $this->Emprendimiento_Social_model->actualizarMaestros($this->dataMaestros);
                 }
             }
             
@@ -267,9 +267,9 @@ class EmprendimientoSocial extends CI_Controller {
                     );
                 }
                 if($this->input->post("accion") == "guardar"){
-                    $resp = $this->emprendimiento_social_model->guardarPdfymas($data);
+                    $resp = $this->Emprendimiento_Social_model->guardarPdfymas($data);
                 }else{
-                    $resp = $this->emprendimiento_social_model->actualizarPdfymas($data);
+                    $resp = $this->Emprendimiento_Social_model->actualizarPdfymas($data);
                 }
                 
                 if($resp){
@@ -290,7 +290,7 @@ class EmprendimientoSocial extends CI_Controller {
                 "fecha_entrega"=>$this->input->post('fechaEntrega'),
                 "modelo" => $this->modelo
             );
-            $resp = $this->emprendimiento_social_model->actualizarPdfymas($data);
+            $resp = $this->Emprendimiento_Social_model->actualizarPdfymas($data);
             if($resp || $this->input->post("accion") == "actualizar"){
                 $response["code"]=200;
                 $this->algoSeActualizo = $resp;

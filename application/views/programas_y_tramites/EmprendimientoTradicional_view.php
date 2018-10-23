@@ -150,6 +150,7 @@
 						if(data.code == 200){
 							if(!yaHayDatos){
 								alert("Los datos se han guardado");
+								yaHayDatos = true;
 							}else{
 								alert("Los datos se han actualizado");
 							}

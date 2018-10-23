@@ -55,5 +55,6 @@ $route["emprendimiento_social"] = "programas_y_tramites/EmprendimientoSocial";
 $route["emprendimiento_tradicional"] = "programas_y_tramites/EmprendimientoTradicional";
 $route["emprendimiento_institucional"] = "programas_y_tramites/EmprendimientoInstitucional";
 $route["emprendimiento_alto_impacto"] = "programas_y_tramites/EmprendimientoAltoImpacto";
+$route["platicas_informativas"] = "platicas_informativas/PlaticasInformativas";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

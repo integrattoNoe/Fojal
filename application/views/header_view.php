@@ -58,7 +58,7 @@ if(!isset($this->session->userdata["logged_in"])){
                         </ul>
                     </li>
                     <li>
-                        <a href="#">About</a>
+                        <a href="<?php echo base_url()?>platicas_informativas" id="platicas">Platicas informativas</a>
                     </li>
                     <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
