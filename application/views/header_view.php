@@ -17,6 +17,11 @@ if(!isset($this->session->userdata["logged_in"])){
     <script src="<?php echo base_url() ?>assets/jquery/dist/jquery.min.js"></script>
     <script src="<?php echo base_url() ?>assets/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/main.css">
+    <script src="<?php echo base_url() ?>assets/jquery/dist/jquery-ui.js"></script>
+    <script src="<?php echo base_url() ?>assets/jquery/dist/datepicker-es.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/jquery-ui.css">
+    <script src="<?php echo base_url() ?>assets/js/jquery.timepicker.js"></script>
     <script>
         var url_imagenes = "<?php echo base_url() ?>uploads/img/";
         var url_pdf = "<?php echo base_url() ?>uploads/pdf/";
@@ -61,13 +66,13 @@ if(!isset($this->session->userdata["logged_in"])){
                         <a href="<?php echo base_url()?>platicas_informativas" id="platicas">Platicas informativas</a>
                     </li>
                     <li>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Calendario</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li>
-                                <a href="#">Page 1</a>
+                                <a href="<?php echo base_url()?>calendario" id="eventos">Eventos</a>
                             </li>
                             <li>
-                                <a href="#">Page 2</a>
+                                <a href="<?php echo base_url()?>banners" id="eventos">Banners</a>
                             </li>
                             <li>
                                 <a href="#">Page 3</a>
@@ -84,7 +89,7 @@ if(!isset($this->session->userdata["logged_in"])){
             </nav>
 
         </div>
-        <div class="loadContent col-8">
+        <div class="loadContent">
         <style>
             .wrapper {
                 display: flex;
@@ -98,6 +103,7 @@ if(!isset($this->session->userdata["logged_in"])){
             }
             .loadContent{
                 margin-left: 250px;
+                width: calc(100vw - 250px);
             }
 
             #sidebar.active {

@@ -83,6 +83,44 @@
 		});
 		$("#guardar").on("click",function(e){
 			e.preventDefault();
+			guardar();
+			
+		});
+		var yaHayDatos = false;
+
+		function getDatos(){
+			$.ajax({
+				//prod:
+				url:"<?php echo base_url()?>index.php/platicas_informativas/PlaticasInformativas/cargarDatos",
+				/*//dev
+				url:"<?php //echo base_url()?>programas_y_tramites/EmprendimientoAltoImpacto/cargarDatos",*/
+				type:"post",
+				beforeSend:function(){
+					$("#loader").show();
+				},
+				success:function(data){
+					console.log(data);
+					yaHayDatos = (data.platicas.length > 0 );
+					console.log(yaHayDatos);
+					$("#ayudaArea").text(data.platicas[0].ayuda);
+					$("#infoGeneralArea").text(data.platicas[0].infoGeneral);
+					$("#asistenciaArea").text(data.platicas[0].asistencia);
+					$("#horarioArea").text(data.platicas[0].horario);
+					$("#fotoGeneral img").attr("src",url_imagenes+data.platicas[0].foto);
+					$(".fileMaestro").hide();
+					$(".cambiarImg").show();
+
+				},
+				complete:function(){
+					$("#loader").fadeOut();
+				},
+				error:function(){
+
+				}
+			});
+		}
+
+		function guardar(){
 			var formD = new FormData(document.getElementById("formD"));
 			if(yaHayDatos){
 				//hay que actualizar
@@ -133,39 +171,6 @@
 							alert(data.msg);
 						}
 					}
-				},
-				complete:function(){
-					$("#loader").fadeOut();
-				},
-				error:function(){
-
-				}
-			});
-			
-		});
-		var yaHayDatos = false;
-		function getDatos(){
-			$.ajax({
-				//prod:
-				url:"<?php echo base_url()?>index.php/platicas_informativas/PlaticasInformativas/cargarDatos",
-				/*//dev
-				url:"<?php //echo base_url()?>programas_y_tramites/EmprendimientoAltoImpacto/cargarDatos",*/
-				type:"post",
-				beforeSend:function(){
-					$("#loader").show();
-				},
-				success:function(data){
-					console.log(data);
-					yaHayDatos = (data.platicas.length > 0 );
-					console.log(yaHayDatos);
-					$("#ayudaArea").text(data.platicas[0].ayuda);
-					$("#infoGeneralArea").text(data.platicas[0].infoGeneral);
-					$("#asistenciaArea").text(data.platicas[0].asistencia);
-					$("#horarioArea").text(data.platicas[0].horario);
-					$("#fotoGeneral img").attr("src",url_imagenes+data.platicas[0].foto);
-					$(".fileMaestro").hide();
-					$(".cambiarImg").show();
-
 				},
 				complete:function(){
 					$("#loader").fadeOut();

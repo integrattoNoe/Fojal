@@ -1,0 +1,31 @@
+.tema,#infoMaestros div label,.fileMaestro, .divColumn input{
+	display: block;
+    width: 50%;
+    margin: 10px 0px;
+    font-size: 14px;
+}
+#infoMaestros div, .divColumn{
+	display: flex;
+	justify-content: center;
+	flex-flow: column;
+	margin:20px 0px;
+	align-items: flex-start;
+}
+#infoMaestros div label{
+	display: flex;
+    flex-flow: column;
+    justify-content: center;
+    width: 50%;
+}
+#infoMaestros div img{
+	width: 200px;
+	height: 150px;
+	border:1px solid #000;
+}
+h5,h6,h1,h2,h3,h4{
+	color:#00CCCC;
+}
+button{
+	width: auto;
+	max-width: 300px;
+}

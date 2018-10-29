@@ -33,7 +33,8 @@ class Login extends CI_Controller {
             if ($login)
             {
                 $session_data = array(
-                    "usuario" => $login[0]->nombre
+                    "usuario" => $login[0]->nombre,
+                    "idUsuario"=>$login[0]->id
                 );
                 $this->session->set_userdata("logged_in",$session_data);
                 //$this->load->view("prueba/prueba",$session_data);
